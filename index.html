@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>wordify.Me</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+
+
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-md-16"> &nbsp; </div>
+    </div>
+    <div class="row">
+        <div class="col-md-16"> &nbsp; </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-16" id="theWord">  </div>
+    </div>
+
+<div class="row">
+    <div class="col-md-16" id="thePronounce">  </div>
+</div>
+
+    <div class="row">
+        <div class="col-md-16" id="theDef">  </div>
+    </div>
+    <div class="row">
+        <div class="col-md-16"> &nbsp; </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-16"> <button id="wordifyMe" type="button" class="btn btn-default">Click here naw for sum werds</button></div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+    const buttonTerms = ["Increasify my wordificational knowledge",
+                         "Teach more of them fancy talky words here naw",
+                         "Morh werds pleaze",
+                         "Onward and forward with the lexical journey!",
+                         "Oh Human, you'll NEVER know all the words. LOLs",
+                         "Okay, So I may not know what all this means",
+                         "Words Words Words Words, I like words",
+                         "I'VE GOT BLISTERS ON ME FINGERS! ♫",
+                         "Hey, Is that Ol' Bill Shakespeare here?",
+                         "Next click, and I'll give you $100",
+                         "Nah, not really, it's just another word",
+                         "Yes, but have you learned anything about horses yet?",
+                         "Kids, why pay for college when you've got THIS?!",
+                         "Oh magic talky box, I summon thee more talky words",
+                         "Get your party-liquor out and make this a drinking game",
+                         "Learinificatin' is way more wild after a few. Woo!",
+                         "Oh, you still don't know? Sorry, not my circus. Not my monkeys"
+                        ];
+    var termIndex = 0;
+    var wordServer = 'http://127.0.0.1:8080'
+
+    $('document').load(function(data){
+        //$("#wordifyMe").text(buttonTerms[0]);
+
+        var requestWord = $.ajax({
+            url: wordServer,
+            type: "GET",
+            complete: function (xhr) {
+                theInfo = xhr.responseText;
+                theInfo = JSON.parse(theInfo); // Creates JSON object from server request
+                $("#theWord").html("<p>" + theInfo.word + "</p>");
+                $("#theDef").html("<h1>" + theInfo.def + "</h1>");
+
+                console.log(theInfo);
+            }
+        });
+    })
+
+    $("#wordifyMe").click(function () {
+        var requestWord = $.ajax({
+            url: wordServer,
+            type: "GET",
+            complete: function(xhr) {
+                theInfo = xhr.responseText;
+                theInfo = JSON.parse(theInfo); // Creates JSON object from server request
+                $("#theWord").html("<p><b>" + theInfo.headword + "</b> <sup>"+theInfo.partOfSpeech+"</sup> </p>");
+                $("#thePronounce").html("<h1> ( " + theInfo.pronounce + " ) </h1>");
+
+                $("#theDef").html("<p>" + theInfo.def + "</p>");
+
+                console.log(theInfo);
+            }
+        });
+        $("#wordifyMe").text(buttonTerms[termIndex]);
+        if(termIndex > buttonTerms.length-1){
+            termIndex =0;
+        } else {
+            termIndex++;
+        }
+    });
+</script>
+</body>
+</html>
