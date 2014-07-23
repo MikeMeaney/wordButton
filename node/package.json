@@ -1,0 +1,8 @@
+{
+    "name": "wordbuttond",
+    "version": "7.23.14",
+    "author": "Mike Meaney",
+    "dependncies": {
+        "express" : "3.x",
+        "request" :"2.37.0"    }
+}
