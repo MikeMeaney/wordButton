@@ -8,8 +8,8 @@ var http = require('http');
 var randomWordURL = 'http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true' +
     '&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5';
 
-var PORT = "" ||  ;
-var IP = ""||
+var PORT = process.env.OPENSHIFT_NODEJS_PORT || 8080 ;
+var IP =  process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
 
 http.createServer(function (req, res){
